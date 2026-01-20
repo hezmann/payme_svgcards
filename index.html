@@ -3228,7 +3228,7 @@ function shuffle(array) {
                 return 'https://paymegame.com/assets/SVG/back/1.svg';
             }
             
-            if (card.rank === 'JOKER') {
+            if (!card || card.rank === 'JOKER') {
                 return null;
             }
             
@@ -3327,7 +3327,7 @@ function shuffle(array) {
                             position: 'absolute',
                             bottom: '1px',
                             right: '1px',
-                            fontSize: '7px',
+                            fontSize: 'clamp(7px, 1.5vw, 10px)',
                             fontWeight: 'bold',
                             color: representedIsRed ? '#e74c3c' : '#000',
                             background: 'rgba(255,255,255,0.95)',
