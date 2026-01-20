@@ -270,6 +270,12 @@
             display: flex;
             flex-direction: column;
             padding-left: 0;
+            transition: margin-left 0.3s ease;
+            margin-left: 0;
+        }
+
+        .game-content-wrapper:has(.side-panel.collapsed) .main-game-area {
+            margin-left: 280px;
         }
 
         .game-screen {
@@ -1442,6 +1448,11 @@
 
             .main-game-area {
                 padding-left: 0;
+                transition: margin-left 0.3s ease;
+            }
+
+            .game-content-wrapper:has(.side-panel.collapsed) .main-game-area {
+                margin-left: 280px;
             }
 
             .deck-area {
@@ -1655,8 +1666,8 @@
 .cards-container{ gap: 6px; }
 .card{ box-shadow: 0 2px 6px rgba(0,0,0,0.10); }
 
-  @media (max-width: 1400px){ .side-panel{ width: 240px; } .side-panel-toggle.expanded{ left: 240px; } .side-panel.collapsed{ margin-left: -240px; } }
-  @media (max-width: 768px){ .side-panel{ width: 260px; } .side-panel-toggle.expanded{ left: 260px; } .side-panel.collapsed{ margin-left: -260px; } .main-game-area{ padding-left: 0 !important; } }
+  @media (max-width: 1400px){ .side-panel{ width: 240px; } .side-panel-toggle.expanded{ left: 240px; } .side-panel.collapsed{ margin-left: -240px; } .game-content-wrapper:has(.side-panel.collapsed) .main-game-area{ margin-left: 240px; } }
+  @media (max-width: 768px){ .side-panel{ width: 260px; } .side-panel-toggle.expanded{ left: 260px; } .side-panel.collapsed{ margin-left: -260px; } .main-game-area{ padding-left: 0 !important; } .game-content-wrapper:has(.side-panel.collapsed) .main-game-area{ margin-left: 260px; } }
 
         .header-message{
             display:flex;
