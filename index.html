@@ -227,17 +227,17 @@
         }
 
         .side-panel {
-            width: 280px;
+            width: 0;
             background: white;
             border-right: 2px solid #dee2e6;
             overflow-y: auto;
-            transition: margin-left 0.3s ease;
+            overflow-x: hidden;
+            transition: width 0.3s ease;
             flex-shrink: 0;
-            margin-left: -280px;
         }
 
         .side-panel.collapsed {
-            margin-left: 0;
+            width: 280px;
         }
 
         .side-panel-toggle {
@@ -270,12 +270,6 @@
             display: flex;
             flex-direction: column;
             padding-left: 0;
-            transition: margin-left 0.3s ease;
-            margin-left: 0;
-        }
-
-        .game-content-wrapper:has(.side-panel.collapsed) .main-game-area {
-            margin-left: 280px;
         }
 
         .game-screen {
