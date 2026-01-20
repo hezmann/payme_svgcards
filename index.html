@@ -443,7 +443,7 @@
 
         .mini-card {
             font-size: 14px;
-            padding: 3px 4px;
+            padding: 0;
             background: white;
             border: 1.5px solid #333;
             border-radius: 3px;
@@ -459,7 +459,7 @@
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
-            line-height: 1.1;
+            overflow: hidden;
         }
 
         .winner-hand-card {
@@ -473,20 +473,18 @@
             margin: clamp(2px, 0.4vw, 3px);
             cursor: default;
             transition: all 0.2s;
-            background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+            background: white;
             position: relative;
-            padding: clamp(2px, 0.4vw, 5px);
+            padding: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            font-size: clamp(6px, 1vw, 10px);
+            overflow: hidden;
         }
 
         .winner-hand-card.red {
-            color: #dc3545;
             border-color: #dc3545;
         }
 
         .winner-hand-card.black {
-            color: #1a1a1a;
             border-color: #1a1a1a;
         }
 
@@ -494,123 +492,11 @@
             /* No special background - wild cards look like regular cards */
         }
 
-        .winner-hand-card.face-card {
-            background: white;
-            border: none;
-            box-shadow: none;
-            padding: 0;
-            width: clamp(45px, 7.5vw, 85px);
-            height: clamp(68px, 11.25vw, 128px);
-        }
-
-        .winner-hand-card.face-card.red {
-            border: none;
-        }
-
-        .winner-hand-card.face-card.black {
-            border: none;
-        }
-
-        .winner-hand-card.face-card .card-decorative-border {
-            display: none;
-        }
-
-        .winner-hand-card .card-corner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .winner-hand-card .card-corner.top-left {
-            position: absolute;
-            top: clamp(2px, 0.4vw, 5px);
-            left: clamp(2px, 0.4vw, 5px);
-        }
-
-        .winner-hand-card .card-corner.bottom-right {
-            position: absolute;
-            bottom: clamp(2px, 0.4vw, 5px);
-            right: clamp(2px, 0.4vw, 5px);
-            transform: rotate(180deg);
-        }
-
-        .winner-hand-card .card-rank-corner {
-            font-size: clamp(11px, 2vw, 16px);
-            font-weight: 700;
-            font-family: Georgia, serif;
-        }
-
-        .winner-hand-card .card-suit-corner {
-            font-size: clamp(9px, 1.6vw, 13px);
-            margin-top: 1px;
-        }
-        
-        /* Special handling for "10" cards - make rank smaller to fit */
-        .winner-hand-card .card-rank-corner:not(:empty) {
-            /* This will apply to all rank corners, but we'll override with smaller size for 2-digit */
-            min-width: 1em;
-            text-align: center;
-        }
-        
-        @supports selector(:has(*)) {
-            /* Modern browsers: detect if content is "10" based on width */
-            .winner-hand-card .card-rank-corner {
-                font-size: clamp(11px, 2vw, 16px);
-            }
-        }
-        
-        /* Fallback: Just make all rank corners slightly smaller to accommodate 10 */
-        .winner-hand-card .card-rank-corner {
-            font-size: clamp(9.5px, 1.8vw, 14px);
-            letter-spacing: -0.3px;
-        }
-
-        .winner-hand-card .card-center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            font-size: clamp(16px, 4vw, 32px);
-            margin: clamp(6px, 1.6vw, 13px) 0;
-        }
-
-        .winner-hand-card .face-card-label {
-            font-size: clamp(6px, 0.8vw, 8px);
-            font-weight: 600;
-            text-align: center;
-            margin-top: 1px;
-            font-family: Georgia, serif;
-            letter-spacing: 0.4px;
-        }
-
-        .winner-hand-card .card-decorative-border {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-
-        .winner-hand-card.red .card-decorative-border {
-            border: 1.5px solid rgba(220, 53, 69, 0.1);
-            margin: 3px;
-        }
-
-        .winner-hand-card.black .card-decorative-border {
-            border: 1.5px solid rgba(26, 26, 26, 0.1);
-            margin: 3px;
-        }
-
         .mini-card.red {
-            color: #dc3545;
             border-color: #dc3545;
         }
 
         .mini-card.black {
-            color: #1a1a1a;
             border-color: #1a1a1a;
         }
 
@@ -929,11 +815,11 @@
             margin: clamp(2px, 0.4vw, 3px);
             cursor: pointer;
             transition: all 0.2s;
-            background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+            background: white;
             position: relative;
-            padding: clamp(3px, 0.5vw, 6px);
+            padding: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            font-size: clamp(8px, 1.2vw, 12px);
+            overflow: hidden;
         }
 
         .card[draggable="true"] {
@@ -950,38 +836,15 @@
         }
 
         .card.red {
-            color: #dc3545;
             border-color: #dc3545;
         }
 
         .card.black {
-            color: #1a1a1a;
             border-color: #1a1a1a;
         }
 
         .card.wild {
             /* No special background - wild cards look like regular cards */
-        }
-
-        .card.face-card {
-            background: white;
-            border: none;
-            box-shadow: none;
-            padding: 0;
-            width: clamp(70px, 9vw, 110px);
-            height: clamp(105px, 13.5vw, 165px);
-        }
-
-        .card.face-card.red {
-            border: none;
-        }
-
-        .card.face-card.black {
-            border: none;
-        }
-
-        .card.face-card .card-decorative-border {
-            display: none;
         }
 
         @keyframes shimmer {
@@ -3360,6 +3223,28 @@ function shuffle(array) {
                 </div>
             );
         }
+        function getCardSVGUrl(card, isFaceDown = false) {
+            if (isFaceDown) {
+                return 'https://paymegame.com/assets/SVG/back/1.svg';
+            }
+            
+            if (!card || card.rank === 'JOKER') {
+                return null;
+            }
+            
+            const suitMap = {
+                '♠': 'spades',
+                '♥': 'hearts',
+                '♦': 'diamonds',
+                '♣': 'clubs'
+            };
+            
+            const suit = suitMap[card.suit];
+            if (!suit) return null;
+            
+            return `https://paymegame.com/assets/SVG/${suit}/${card.rank}.svg`;
+        }
+        
         function MiniCard({ card, isWinnerHand }) {
             if (isWinnerHand) {
                 return <WinnerHandCard card={card} showOriginalTag={!card.addedBy} />;
@@ -3369,7 +3254,9 @@ function shuffle(array) {
             const isRed = card.suit === '♥' || card.suit === '♦';
             const representedSuit = representsCard ? representsCard.slice(-1) : null;
             const representedIsRed = representedSuit === '♥' || representedSuit === '♦';
-            if (isJoker) {
+            const svgUrl = getCardSVGUrl(card);
+            
+            if (isJoker || !svgUrl) {
                 return (
                     <div
                         className={`mini-card ${card.isWildForRound ? 'wild' : ''}`}
@@ -3415,29 +3302,40 @@ function shuffle(array) {
                     </div>
                 );
             }
+            
             return (
                 <div
                     className={`mini-card ${isRed ? 'red' : 'black'} ${card.isWildForRound ? 'wild' : ''}`}
                     title={representsCard ? `Represents ${representsCard}` : ''}
                     style={{
                         position: 'relative',
-                        display: 'inline-flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '2px'
+                        padding: '0',
+                        overflow: 'hidden'
                     }}
                 >
-                    <div style={{fontSize: '12px', fontWeight: 'bold', lineHeight: '1'}}>{card.rank}</div>
-                    <div style={{fontSize: '14px', lineHeight: '1'}}>{card.suit}</div>
+                    <img 
+                        src={svgUrl} 
+                        alt={`${card.rank}${card.suit}`}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain'
+                        }}
+                    />
                     {representsCard && (
                         <div style={{
                             position: 'absolute',
                             bottom: '1px',
-                            fontSize: '8px',
+                            right: '1px',
+                            fontSize: 'clamp(7px, 1.5vw, 10px)',
                             fontWeight: 'bold',
                             color: representedIsRed ? '#e74c3c' : '#000',
-                            opacity: 0.8
+                            background: 'rgba(255,255,255,0.95)',
+                            padding: '0px 2px',
+                            borderRadius: '2px',
+                            zIndex: 10,
+                            border: '0.5px solid #b8860b',
+                            lineHeight: '1.1'
                         }}>
                             ={representsCard}
                         </div>
@@ -3447,85 +3345,52 @@ function shuffle(array) {
         }
         function WinnerHandCard({ card, showOriginalTag = true }) {
             const isJoker = card.rank === 'JOKER';
-            const isFaceCard = ['J', 'Q', 'K'].includes(card.rank);
             const isWildCard = card.isWildForRound && !isJoker;
             const representsCard = card.representsCard;
             const addedBy = card.addedBy;
             const isRed = card.suit === '♥' || card.suit === '♦';
             const representedSuit = representsCard ? representsCard.slice(-1) : null;
             const representedIsRed = representedSuit === '♥' || representedSuit === '♦';
-            const className = `winner-hand-card ${isFaceCard ? 'face-card' : ''} ${isRed ? 'red' : 'black'} ${card.isWildForRound ? 'wild' : ''}`;
-            const getFaceCardName = (rank) => {
-                if (rank === 'J') return 'JACK';
-                if (rank === 'Q') return 'QUEEN';
-                if (rank === 'K') return 'KING';
-                return '';
-            };
-            const getSuitPattern = (rank, suit) => {
-                const patterns = {
-                    '2': [{ top: '25%', left: '50%' }, { top: '75%', left: '50%', rotate: 180 }],
-                    '3': [{ top: '19%', left: '50%' }, { top: '50%', left: '50%' }, { top: '80%', left: '50%', rotate: 180 }],
-                    '4': [
-                        { top: '25%', left: '35%' }, { top: '25%', left: '65%' },
-                        { top: '75%', left: '35%', rotate: 180 }, { top: '75%', left: '65%', rotate: 180 }
-                    ],
-                    '5': [
-                        { top: '20%', left: '35%' }, { top: '20%', left: '65%' },
-                        { top: '50%', left: '50%' },
-                        { top: '80%', left: '35%', rotate: 180 }, { top: '80%', left: '65%', rotate: 180 }
-                    ],
-                    '6': [
-                        { top: '20%', left: '35%' }, { top: '20%', left: '65%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '80%', left: '35%', rotate: 180 }, { top: '80%', left: '65%', rotate: 180 }
-                    ],
-                    '7': [
-                        { top: '17%', left: '35%' }, { top: '17%', left: '65%' },
-                        { top: '35%', left: '50%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '83%', left: '35%', rotate: 180 }, { top: '83%', left: '65%', rotate: 180 }
-                    ],
-                    '8': [
-                        { top: '15%', left: '35%' }, { top: '15%', left: '65%' },
-                        { top: '35%', left: '50%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '65%', left: '50%', rotate: 180 },
-                        { top: '85%', left: '35%', rotate: 180 }, { top: '85%', left: '65%', rotate: 180 }
-                    ],
-                    '9': [
-                        { top: '15%', left: '35%' }, { top: '15%', left: '65%' },
-                        { top: '32%', left: '35%' }, { top: '32%', left: '65%' },
-                        { top: '50%', left: '50%' },
-                        { top: '68%', left: '35%', rotate: 180 }, { top: '68%', left: '65%', rotate: 180 },
-                        { top: '85%', left: '35%', rotate: 180 }, { top: '85%', left: '65%', rotate: 180 }
-                    ],
-                    '10': [
-                        { top: '6%', left: '35%' }, { top: '6%', left: '65%' },
-                        { top: '19%', left: '50%' },
-                        { top: '32%', left: '35%' }, { top: '32%', left: '65%' },
-                        { top: '68%', left: '35%', rotate: 180 }, { top: '68%', left: '65%', rotate: 180 },
-                        { top: '81%', left: '50%', rotate: 180 },
-                        { top: '94%', left: '35%', rotate: 180 }, { top: '94%', left: '65%', rotate: 180 }
-                    ],
-                    'A': [{ top: '50%', left: '50%' }]
-                };
-                return patterns[rank] || [];
-            };
-            const getFaceCardUnicode = (rank, suit) => {
-                const cards = {
-                    'J♠': '🂫', 'J♥': '🂻', 'J♦': '🃋', 'J♣': '🃛',
-                    'Q♠': '🂭', 'Q♥': '🂽', 'Q♦': '🃍', 'Q♣': '🃝',
-                    'K♠': '🂮', 'K♥': '🂾', 'K♦': '🃎', 'K♣': '🃞'
-                };
-                return cards[`${rank}${suit}`] || '🂠';
-            };
+            const className = `winner-hand-card ${isRed ? 'red' : 'black'} ${card.isWildForRound ? 'wild' : ''}`;
+            
+            const svgUrl = getCardSVGUrl(card);
+            
             return (
                 <div className={className} style={{
                     boxShadow: addedBy ? '0 0 0 3px #28a745' : '0 0 0 2px rgba(30, 60, 114, 0.2)',
-                    position: 'relative'
+                    position: 'relative',
+                    padding: '0',
+                    overflow: 'hidden'
                 }}>
-                    <div className="card-decorative-border"></div>
-                    {}
+                    {isJoker || !svgUrl ? (
+                        <>
+                            <div style={{
+                                position: 'absolute',
+                                top: '3px',
+                                left: '3px',
+                                right: '3px',
+                                bottom: '3px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 'clamp(60px, 9vw, 110px)',
+                                lineHeight: '1'
+                            }}>
+                                🃏
+                            </div>
+                        </>
+                    ) : (
+                        <img 
+                            src={svgUrl} 
+                            alt={`${card.rank}${card.suit}`}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'contain'
+                            }}
+                        />
+                    )}
+                    
                     {showOriginalTag && !addedBy && (
                         <div style={{
                             position: 'absolute',
@@ -3545,7 +3410,7 @@ function shuffle(array) {
                             ORIGINAL
                         </div>
                     )}
-                    {}
+                    
                     {addedBy && (
                         <div style={{
                             position: 'absolute',
@@ -3566,187 +3431,38 @@ function shuffle(array) {
                             {addedBy}
                         </div>
                     )}
-                    {!isJoker && (
-                        <>
-                            {}
-                            {!isFaceCard && (
-                                <>
-                                    <div className="card-corner top-left">
-                                        <div className="card-rank-corner">{card.rank}</div>
-                                        <div className="card-suit-corner">{card.suit}</div>
-                                    </div>
-                                    <div className="card-corner bottom-right">
-                                        <div className="card-rank-corner">{card.rank}</div>
-                                        <div className="card-suit-corner">{card.suit}</div>
-                                    </div>
-                                </>
-                            )}
-                            {}
-                            {isFaceCard ? (
-                                <div style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}>
-                                    <div style={{
-                                        fontSize: 'clamp(68px, 11.25vw, 128px)',
-                                        lineHeight: '1'
-                                    }}>
-                                        {getFaceCardUnicode(card.rank, card.suit)}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}>
-                                    {getSuitPattern(card.rank, card.suit).map((pos, idx) => (
-                                        <div
-                                            key={idx}
-                                            style={{
-                                                position: 'absolute',
-                                                top: pos.top,
-                                                left: pos.left,
-                                                transform: `translate(-50%, -50%) ${pos.rotate ? `rotate(${pos.rotate}deg)` : ''}`,
-                                                fontSize: 'clamp(12px, 2.5vw, 20px)',
-                                                lineHeight: '1'
-                                            }}
-                                        >
-                                            {card.suit}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            {representsCard && isWildCard && (
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: '16px',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    fontSize: '9px',
-                                    fontWeight: '600',
-                                    background: 'rgba(255,255,255,0.9)',
-                                    padding: '2px 5px',
-                                    borderRadius: '3px',
-                                    border: '1px solid #b8860b',
-                                    color: ['♥', '♦'].includes(representsCard.slice(-1)) ? '#e74c3c' : '#000',
-                                    zIndex: 11
-                                }}>
-                                    = {representsCard}
-                                </div>
-                            )}
-                        </>
-                    )}
-                    {isJoker && (
-                        <>
-                            <div style={{
-                                position: 'absolute',
-                                top: '3px',
-                                left: '3px',
-                                right: '3px',
-                                bottom: '3px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: 'clamp(60px, 9vw, 110px)',
-                                lineHeight: '1'
-                            }}>
-                                🃏
-                            </div>
-                            {representsCard && (
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: 'clamp(6px, 1vw, 12px)',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    fontSize: 'clamp(9px, 1.2vw, 12px)',
-                                    fontWeight: '600',
-                                    background: 'rgba(255,255,255,0.95)',
-                                    padding: '2px 5px',
-                                    borderRadius: '3px',
-                                    border: '1px solid #b8860b',
-                                    color: ['♥', '♦'].includes(representsCard.slice(-1)) ? '#e74c3c' : '#000',
-                                    zIndex: 10,
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    = {representsCard}
-                                </div>
-                            )}
-                        </>
+                    
+                    {representsCard && (isWildCard || isJoker) && (
+                        <div style={{
+                            position: 'absolute',
+                            bottom: isJoker ? 'clamp(6px, 1vw, 12px)' : '16px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            fontSize: '9px',
+                            fontWeight: '600',
+                            background: 'rgba(255,255,255,0.95)',
+                            padding: '2px 5px',
+                            borderRadius: '3px',
+                            border: '1px solid #b8860b',
+                            color: representedIsRed ? '#e74c3c' : '#000',
+                            zIndex: 11,
+                            whiteSpace: 'nowrap'
+                        }}>
+                            = {representsCard}
+                        </div>
                     )}
                 </div>
             );
         }
         function Card({ card, onClick, onDoubleClick, selected, disabled, inMeld, draggable, onDragStart, onDragOver, onDrop, onDragEnd, isDragging, onTouchStart, onTouchMove, onTouchEnd }) {
             const isJoker = card.rank === 'JOKER';
-            const isFaceCard = ['J', 'Q', 'K'].includes(card.rank);
             const isWildCard = card.isWildForRound && !isJoker;
             const representsCard = card.representsCard;
             const addedBy = card.addedBy;
-            const className = `card ${isFaceCard ? 'face-card' : ''} ${card.isRed ? 'red' : 'black'} ${selected ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${card.isWildForRound ? 'wild' : ''} ${inMeld ? 'in-meld' : ''} ${isDragging ? 'dragging' : ''}`;
-            const getFaceCardName = (rank) => {
-                if (rank === 'J') return 'JACK';
-                if (rank === 'Q') return 'QUEEN';
-                if (rank === 'K') return 'KING';
-                return '';
-            };
-            const getSuitPattern = (rank, suit) => {
-                const patterns = {
-                    '2': [{ top: '25%', left: '50%' }, { top: '75%', left: '50%', rotate: 180 }],
-                    '3': [{ top: '19%', left: '50%' }, { top: '50%', left: '50%' }, { top: '80%', left: '50%', rotate: 180 }],
-                    '4': [
-                        { top: '25%', left: '35%' }, { top: '25%', left: '65%' },
-                        { top: '75%', left: '35%', rotate: 180 }, { top: '75%', left: '65%', rotate: 180 }
-                    ],
-                    '5': [
-                        { top: '20%', left: '35%' }, { top: '20%', left: '65%' },
-                        { top: '50%', left: '50%' },
-                        { top: '80%', left: '35%', rotate: 180 }, { top: '80%', left: '65%', rotate: 180 }
-                    ],
-                    '6': [
-                        { top: '20%', left: '35%' }, { top: '20%', left: '65%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '80%', left: '35%', rotate: 180 }, { top: '80%', left: '65%', rotate: 180 }
-                    ],
-                    '7': [
-                        { top: '17%', left: '35%' }, { top: '17%', left: '65%' },
-                        { top: '35%', left: '50%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '83%', left: '35%', rotate: 180 }, { top: '83%', left: '65%', rotate: 180 }
-                    ],
-                    '8': [
-                        { top: '15%', left: '35%' }, { top: '15%', left: '65%' },
-                        { top: '35%', left: '50%' },
-                        { top: '50%', left: '35%' }, { top: '50%', left: '65%' },
-                        { top: '65%', left: '50%', rotate: 180 },
-                        { top: '85%', left: '35%', rotate: 180 }, { top: '85%', left: '65%', rotate: 180 }
-                    ],
-                    '9': [
-                        { top: '15%', left: '35%' }, { top: '15%', left: '65%' },
-                        { top: '32%', left: '35%' }, { top: '32%', left: '65%' },
-                        { top: '50%', left: '50%' },
-                        { top: '68%', left: '35%', rotate: 180 }, { top: '68%', left: '65%', rotate: 180 },
-                        { top: '85%', left: '35%', rotate: 180 }, { top: '85%', left: '65%', rotate: 180 }
-                    ],
-                    '10': [
-                        { top: '6%', left: '35%' }, { top: '6%', left: '65%' },
-                        { top: '19%', left: '50%' },
-                        { top: '32%', left: '35%' }, { top: '32%', left: '65%' },
-                        { top: '68%', left: '35%', rotate: 180 }, { top: '68%', left: '65%', rotate: 180 },
-                        { top: '81%', left: '50%', rotate: 180 },
-                        { top: '94%', left: '35%', rotate: 180 }, { top: '94%', left: '65%', rotate: 180 }
-                    ],
-                    'A': [{ top: '50%', left: '50%' }]
-                };
-                return patterns[rank] || [];
-            };
-            const getFaceCardUnicode = (rank, suit) => {
-                const cards = {
-                    'J♠': '🂫', 'J♥': '🂻', 'J♦': '🃋', 'J♣': '🃛',
-                    'Q♠': '🂭', 'Q♥': '🂽', 'Q♦': '🃍', 'Q♣': '🃝',
-                    'K♠': '🂮', 'K♥': '🂾', 'K♦': '🃎', 'K♣': '🃞'
-                };
-                return cards[`${rank}${suit}`] || '🂠';
-            };
+            const className = `card ${card.isRed ? 'red' : 'black'} ${selected ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${card.isWildForRound ? 'wild' : ''} ${inMeld ? 'in-meld' : ''} ${isDragging ? 'dragging' : ''}`;
+            
+            const svgUrl = getCardSVGUrl(card);
+            
             return (
                 <div
                     className={className}
@@ -3760,9 +3476,39 @@ function shuffle(array) {
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
+                    style={{
+                        padding: '0',
+                        overflow: 'hidden'
+                    }}
                 >
-                    <div className="card-decorative-border"></div>
-                    {}
+                    {isJoker || !svgUrl ? (
+                        <div style={{
+                            position: 'absolute',
+                            top: '4px',
+                            left: '4px',
+                            right: '4px',
+                            bottom: '4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 'clamp(85px, 11vw, 145px)',
+                            lineHeight: '1'
+                        }}>
+                            🃏
+                        </div>
+                    ) : (
+                        <img 
+                            src={svgUrl} 
+                            alt={`${card.rank}${card.suit}`}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'contain',
+                                pointerEvents: 'none'
+                            }}
+                        />
+                    )}
+                    
                     {addedBy && (
                         <div style={{
                             position: 'absolute',
@@ -3783,114 +3529,25 @@ function shuffle(array) {
                             {addedBy}
                         </div>
                     )}
-                    {!isJoker && (
-                        <>
-                            {}
-                            {!isFaceCard && (
-                                <>
-                                    <div className="card-corner top-left">
-                                        <div className="card-rank-corner">{card.rank}</div>
-                                        <div className="card-suit-corner">{card.suit}</div>
-                                    </div>
-                                    <div className="card-corner bottom-right">
-                                        <div className="card-rank-corner">{card.rank}</div>
-                                        <div className="card-suit-corner">{card.suit}</div>
-                                    </div>
-                                </>
-                            )}
-                            {}
-                            {isFaceCard ? (
-                                <div style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}>
-                                    {}
-                                    <div style={{
-                                        fontSize: 'clamp(105px, 13.5vw, 165px)',
-                                        lineHeight: '1'
-                                    }}>
-                                        {getFaceCardUnicode(card.rank, card.suit)}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}>
-                                    {getSuitPattern(card.rank, card.suit).map((pos, idx) => (
-                                        <div
-                                            key={idx}
-                                            style={{
-                                                position: 'absolute',
-                                                top: pos.top,
-                                                left: pos.left,
-                                                transform: `translate(-50%, -50%) ${pos.rotate ? `rotate(${pos.rotate}deg)` : ''}`,
-                                                fontSize: 'clamp(16px, 3.2vw, 26px)',
-                                                lineHeight: '1'
-                                            }}
-                                        >
-                                            {card.suit}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            {}
-                            {representsCard && isWildCard && (
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: '20px',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    fontSize: '11px',
-                                    fontWeight: '600',
-                                    background: 'rgba(255,255,255,0.9)',
-                                    padding: '2px 6px',
-                                    borderRadius: '3px',
-                                    border: '1px solid #b8860b',
-                                    color: ['♥', '♦'].includes(representsCard.slice(-1)) ? '#e74c3c' : '#000',
-                                    zIndex: 11
-                                }}>
-                                    = {representsCard}
-                                </div>
-                            )}
-                        </>
-                    )}
-                    {isJoker && (
-                        <>
-                            <div style={{
-                                position: 'absolute',
-                                top: '4px',
-                                left: '4px',
-                                right: '4px',
-                                bottom: '4px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: 'clamp(85px, 11vw, 145px)',
-                                lineHeight: '1'
-                            }}>
-                                🃏
-                            </div>
-                            {representsCard && (
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: 'clamp(18px, 2vw, 25px)',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    fontSize: 'clamp(10px, 1.2vw, 13px)',
-                                    fontWeight: '600',
-                                    background: 'rgba(255,255,255,0.95)',
-                                    padding: '3px 6px',
-                                    borderRadius: '4px',
-                                    border: '1.5px solid #b8860b',
-                                    color: ['♥', '♦'].includes(representsCard.slice(-1)) ? '#e74c3c' : '#000',
-                                    zIndex: 10,
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    = {representsCard}
-                                </div>
-                            )}
-                        </>
+                    
+                    {representsCard && (isWildCard || isJoker) && (
+                        <div style={{
+                            position: 'absolute',
+                            bottom: isJoker ? 'clamp(18px, 2vw, 25px)' : '20px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            fontSize: isJoker ? 'clamp(10px, 1.2vw, 13px)' : '11px',
+                            fontWeight: '600',
+                            background: 'rgba(255,255,255,0.95)',
+                            padding: '3px 6px',
+                            borderRadius: '4px',
+                            border: '1.5px solid #b8860b',
+                            color: ['♥', '♦'].includes(representsCard.slice(-1)) ? '#e74c3c' : '#000',
+                            zIndex: 10,
+                            whiteSpace: 'nowrap'
+                        }}>
+                            = {representsCard}
+                        </div>
                     )}
                 </div>
             );
@@ -7022,8 +6679,21 @@ const processAITurn = () => {
                                 <div className={`deck-pile ${aiDrawHighlight === 'deck' ? 'ai-highlight' : ''}`}>
                                     <div className="pile-label">Deck ({deck.length})</div>
                                     <div className={`card-stack ${!isHumanTurn || (gamePhase !== 'draw' && gamePhase !== 'finaldraw') ? 'disabled' : ''}`}
-                                         onClick={() => isHumanTurn && (gamePhase === 'draw' || gamePhase === 'finaldraw') && drawCard(false)}>
-                                        🂠
+                                         onClick={() => isHumanTurn && (gamePhase === 'draw' || gamePhase === 'finaldraw') && drawCard(false)}
+                                         style={{
+                                             padding: '0',
+                                             overflow: 'hidden'
+                                         }}>
+                                        <img 
+                                            src={getCardSVGUrl(null, true)} 
+                                            alt="Card back"
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'contain',
+                                                pointerEvents: 'none'
+                                            }}
+                                        />
                                     </div>
                                 </div>
                                 <div className={`discard-pile ${aiDrawHighlight === 'discard' ? 'ai-highlight' : ''}`}>
