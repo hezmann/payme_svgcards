@@ -1989,22 +1989,13 @@
         .table-player-cards .card.face-down {
             width: 110px;
             height: 165px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: url('https://paymegame.com/assets/SVG/back/1.svg') no-repeat center center;
+            background-size: cover;
             border: 2px solid #1a2a4a;
             border-radius: 6px;
             position: relative;
             margin: 0 -20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .table-player-cards .card.face-down::after {
-            content: '🂠';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            color: rgba(255,255,255,0.3);
         }
 
         .position-top .table-player-cards .card.face-down { z-index: auto; }
@@ -2188,22 +2179,13 @@
         .table-player-cards .card.face-down {
             width: 110px;
             height: 165px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: url('https://paymegame.com/assets/SVG/back/1.svg') no-repeat center center;
+            background-size: cover;
             border: 2px solid #1a2a4a;
             border-radius: 6px;
             position: relative;
             margin: 0 -35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .table-player-cards .card.face-down::after {
-            content: '🂠';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            color: rgba(255,255,255,0.3);
         }
 
         .table-player-winner-cards {
@@ -3242,7 +3224,10 @@ function shuffle(array) {
             const suit = suitMap[card.suit];
             if (!suit) return null;
             
-            return `https://paymegame.com/assets/SVG/${suit}/${card.rank}.svg`;
+            // Use A(1).svg for Ace cards instead of A.svg
+            const rank = card.rank === 'A' ? 'A(1)' : card.rank;
+            
+            return `https://paymegame.com/assets/SVG/${suit}/${rank}.svg`;
         }
         
         function MiniCard({ card, isWinnerHand }) {
