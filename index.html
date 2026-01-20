@@ -6085,11 +6085,12 @@ const processAITurn = () => {
                     if (nextIndex === roundWinner) {
                         // Last player has finished - complete the round
                         // Keep the modal showing so hands remain visible
-                        setTimeout(() => {
+                        const timeoutId = setTimeout(() => {
                             setAllFinalPlaysComplete(true);
                             // Don't clear showingAIMelds or aiResultsToShow here
                             // The Next Round/Show Scoreboard buttons will handle cleanup
                         }, 1500); // Short delay to show the last player's results
+                        timeoutRefs.current.push(timeoutId);
                     } else {
                         const isNextHuman = !players[nextIndex].isAI;
                         nextFinalTurnActionRef.current = () => {
@@ -7468,7 +7469,7 @@ const processAITurn = () => {
                             )}
                         </div>
                         {}
-                        {false && humanFinalPlayResults && roundWinner !== null && !allFinalPlaysComplete && (
+                        {humanFinalPlayResults && roundWinner !== null && !allFinalPlaysComplete && (
                             <div className="your-final-play-panel">
                                 <h3>👤 Your Final Play</h3>
                                 <div className="final-play-content" style={{overflowX: 'auto', WebkitOverflowScrolling: 'touch'}}>
