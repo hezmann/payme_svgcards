@@ -5373,18 +5373,23 @@ const [gamePhase, setGamePhase] = useState('draw');
                     setDiscardPile(updatedDiscardPile);
                     setPlayersWhoHaveTakenFinalTurn(prev => new Set([...prev, 0]));
                     const nextIndex = 1 % players.length;
+                    const points = 0;
+                    setHumanFinalPlayResults({
+                        player: currentPlayer,
+                        melds: currentPlayer.melds,
+                        remaining: [],
+                        discard: lastCard,
+                        points: points,
+                        playedOnCards: currentPlayer.playedOnCards || []
+                    });
                     if (nextIndex === roundWinner) {
-                        setAllFinalPlaysComplete(true);
+                        // Human player is the last one to finish before wrapping back to the winner
+                        // Set allFinalPlaysComplete after a short delay to show the results
+                        const timeoutId = setTimeout(() => {
+                            setAllFinalPlaysComplete(true);
+                        }, 1500);
+                        timeoutRefs.current.push(timeoutId);
                     } else {
-                        const points = 0;
-                        setHumanFinalPlayResults({
-                            player: currentPlayer,
-                            melds: currentPlayer.melds,
-                            remaining: [],
-                            discard: lastCard,
-                            points: points,
-                            playedOnCards: currentPlayer.playedOnCards || []
-                        });
                         setShowingHumanFinalPlay(true);
                         const isNextHuman = !players[nextIndex].isAI;
                         const timeoutId = setTimeout(() => {
