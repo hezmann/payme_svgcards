@@ -1839,46 +1839,6 @@
 .game-screen{
   padding-bottom: clamp(220px, 25vh, 260px);
 }
-
-.your-final-play-panel {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  z-index: 60;
-
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding-bottom: env(safe-area-inset-bottom);
-
-  padding: 8px 12px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-  max-height: 50vh;
-  overflow: hidden;
-}
-
-.game-content-wrapper:has(.side-panel.collapsed) .your-final-play-panel{
-  left: calc(280px + 20px);
-}
-
-.your-final-play-panel .final-play-content {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: visible;
-}
-
-.your-final-play-panel h3 {
-  color: #856404;
-  margin: 0 0 8px 0;
-  font-size: 16px;
-  flex-shrink: 0;
-}
 </style>
 
 <style>
@@ -3608,8 +3568,6 @@ const [gamePhase, setGamePhase] = useState('draw');
             const [showingAIMelds, setShowingAIMelds] = useState(false);
             const [aiResultsToShow, setAiResultsToShow] = useState(null);
             const [isDiscarding, setIsDiscarding] = useState(false);
-            const [showingHumanFinalPlay, setShowingHumanFinalPlay] = useState(false);
-            const [humanFinalPlayResults, setHumanFinalPlayResults] = useState(null);
             const [allFinalPlaysComplete, setAllFinalPlaysComplete] = useState(false);
             const [showScoreboardModal, setShowScoreboardModal] = useState(false);
             const [draggedMeldCardIndex, setDraggedMeldCardIndex] = useState(null);
@@ -3765,8 +3723,6 @@ const [gamePhase, setGamePhase] = useState('draw');
                 const timeoutId = setTimeout(() => {
                     setShowingAIMelds(false);
                     setAiResultsToShow(null);
-                    setShowingHumanFinalPlay(false);
-                    setHumanFinalPlayResults(null);
                     setAllFinalPlaysComplete(false);
                     setRoundWinner(null);
                     setPlayersWhoHaveTakenFinalTurn(new Set());
@@ -4400,8 +4356,6 @@ const [gamePhase, setGamePhase] = useState('draw');
                 setDraggedCardIndex(null);
             };
             const openScoreboard = () => {
-                setShowingHumanFinalPlay(false);
-                setHumanFinalPlayResults(null);
                 setShowingAIMelds(false);
                 setAiResultsToShow(null);
                 setAllFinalPlaysComplete(true);
@@ -4467,7 +4421,6 @@ const [gamePhase, setGamePhase] = useState('draw');
                             nextFinalTurnActionRef.current = () => {
                                 setShowingAIMelds(false);
                                 setAiResultsToShow(null);
-                                setHumanFinalPlayResults(null);
                                 setAllFinalPlaysComplete(true);
                             };
                         } else {
@@ -4486,34 +4439,12 @@ const [gamePhase, setGamePhase] = useState('draw');
                     }
                     const nextIndex = (currentPlayerIndex + 1) % players.length;
                     if (nextIndex === roundWinner) {
-                        const points = calculateScore(currentPlayer.hand);
-                        setHumanFinalPlayResults({
-                            player: currentPlayer,
-                            melds: currentPlayer.melds,
-                            remaining: [...currentPlayer.hand],
-                            discard: discardedCard,
-                            points: points,
-                            playedOnCards: currentPlayer.playedOnCards || []
-                        });
-                        setShowingHumanFinalPlay(true);
                         setIsDiscarding(false);
                         isDiscardingRef.current = false;
                         nextFinalTurnActionRef.current = () => {
-                            setShowingHumanFinalPlay(false);
-                            setHumanFinalPlayResults(null);
                             setAllFinalPlaysComplete(true);
                         };
                     } else {
-                        const points = calculateScore(currentPlayer.hand);
-                        setHumanFinalPlayResults({
-                            player: currentPlayer,
-                            melds: currentPlayer.melds,
-                            remaining: [...currentPlayer.hand],
-                            discard: discardedCard,
-                            points: points,
-                            playedOnCards: currentPlayer.playedOnCards || []
-                        });
-                        setShowingHumanFinalPlay(false);
                         const isNextHuman = !players[nextIndex].isAI;
                         const timeoutId = setTimeout(() => {
                             setCurrentPlayerIndex(nextIndex);
@@ -5381,15 +5312,6 @@ const [gamePhase, setGamePhase] = useState('draw');
                     setDiscardPile(updatedDiscardPile);
                     setPlayersWhoHaveTakenFinalTurn(prev => new Set([...prev, 0]));
                     const nextIndex = 1 % players.length;
-                    const points = 0;
-                    setHumanFinalPlayResults({
-                        player: currentPlayer,
-                        melds: currentPlayer.melds,
-                        remaining: [],
-                        discard: lastCard,
-                        points: points,
-                        playedOnCards: currentPlayer.playedOnCards || []
-                    });
                     if (nextIndex === roundWinner) {
                         // Human player is the last one to finish before wrapping back to the winner
                         // Set allFinalPlaysComplete after a short delay to show the results
@@ -5398,7 +5320,6 @@ const [gamePhase, setGamePhase] = useState('draw');
                         }, 1500);
                         timeoutRefs.current.push(timeoutId);
                     } else {
-                        setShowingHumanFinalPlay(true);
                         const isNextHuman = !players[nextIndex].isAI;
                         const timeoutId = setTimeout(() => {
                             setCurrentPlayerIndex(nextIndex);
@@ -6847,8 +6768,6 @@ const processAITurn = () => {
                                                                     const winnerIdx = roundWinner;
                                                                     setShowingAIMelds(false);
                                                                     setAiResultsToShow(null);
-                                                                    setShowingHumanFinalPlay(false);
-                                                                    setHumanFinalPlayResults(null);
                                                                     setAllFinalPlaysComplete(false);
                                                                     setPlayersWhoHaveTakenFinalTurn(new Set());
                                                                     setRoundWinner(null);
@@ -6947,7 +6866,7 @@ const processAITurn = () => {
                                                  `${players[currentPlayerIndex]?.name} is Building Melds...`}
                                             </h3>
                                             {}
-                                            {isHumanTurn && gamePhase === 'finallaydown' && !buildingPayMe && !showingHumanFinalPlay && (
+                                            {isHumanTurn && gamePhase === 'finallaydown' && !buildingPayMe && (
                                                 <button className="success" onClick={finalizeFinalMelds}>Finalize Melds and Discard</button>
                                             )}
                                             {}
@@ -7160,7 +7079,7 @@ const processAITurn = () => {
                             </div>
                         )}
                         {}
-                        {humanPlayer.hand.length > 0 && !showingHumanFinalPlay && !allFinalPlaysComplete && !humanFinalPlayResults && (
+                        {humanPlayer.hand.length > 0 && !allFinalPlaysComplete && (
                             <div
                                 className="hand-area sticky-hand"
                                 onDragOver={(e) => {
@@ -7249,59 +7168,8 @@ const processAITurn = () => {
                             </div>
                         )}
                         
-                        {humanFinalPlayResults && roundWinner !== null && 
-                         (humanFinalPlayResults.playedOnCards?.length > 0 || humanFinalPlayResults.remaining?.length > 0) && (
-                            <div className="human-winner-cards">
-                                {humanFinalPlayResults.playedOnCards && humanFinalPlayResults.playedOnCards.length > 0 && (
-                                    <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                        <h5 style={{margin: '0', fontSize: '11px', color: '#17a2b8', whiteSpace: 'nowrap'}}>Played on Winner:</h5>
-                                        <div style={{
-                                            display: 'flex', 
-                                            gap: '3px',
-                                            padding: '4px',
-                                            border: '2px solid #17a2b8',
-                                            borderRadius: '4px',
-                                            background: 'rgba(23, 162, 184, 0.05)'
-                                        }}>
-                                            {humanFinalPlayResults.playedOnCards.map((card, idx) => (
-                                                <div key={idx} style={{display: 'inline-block', flexShrink: 0}}>
-                                                    <WinnerHandCard card={{...card, isWildForRound: isWild(card, round), addedBy: card.addedBy}} showOriginalTag={false} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                                
-                                {humanFinalPlayResults.remaining.length > 0 && (
-                                    <>
-                                    {humanFinalPlayResults.playedOnCards?.length > 0 && (
-                                        <div style={{borderLeft: '2px solid #dee2e6', height: '60px', alignSelf: 'center'}}></div>
-                                    )}
-                                    <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                        <h5 style={{margin: '0', fontSize: '11px', color: '#dc3545', whiteSpace: 'nowrap'}}>
-                                            Remaining ({humanFinalPlayResults.points} pts):
-                                        </h5>
-                                        <div style={{
-                                            display: 'flex', 
-                                            gap: '4px',
-                                            padding: '4px',
-                                            border: '2px solid #dc3545',
-                                            borderRadius: '4px',
-                                            background: 'rgba(220, 53, 69, 0.05)'
-                                        }}>
-                                            {humanFinalPlayResults.remaining.map((card, idx) => (
-                                                <div key={idx} style={{display: 'inline-block', flexShrink: 0}}>
-                                                    <WinnerHandCard card={{...card, isWildForRound: isWild(card, round)}} showOriginalTag={false} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    </>
-                                )}
-                            </div>
-                        )}
                         {}
-                        {humanPlayer.melds.length > 0 && !buildingPayMe && roundWinner === 0 && !showingHumanFinalPlay && (
+                        {humanPlayer.melds.length > 0 && !buildingPayMe && roundWinner === 0 && (
                             <div className="human-winner-cards">
                                 <div style={{display: 'inline-flex', flexDirection: 'column', gap: '4px'}}>
                                     <div style={{fontSize: '11px', fontWeight: '700', color: '#b8860b', textShadow: '0 1px 2px rgba(0,0,0,0.2)'}}>🏆 Your Winning Hand:</div>
@@ -7331,7 +7199,7 @@ const processAITurn = () => {
                             </div>
                         )}
                         {}
-                        {humanPlayer.melds.length > 0 && !buildingPayMe && roundWinner !== 0 && !(gamePhase === 'finaldiscard' && meldBuildingComplete) && !(gamePhase === 'finallaydown' && meldBuildingComplete) && !showingHumanFinalPlay && !showingAIMelds && !allFinalPlaysComplete && !humanFinalPlayResults && (
+                        {humanPlayer.melds.length > 0 && !buildingPayMe && roundWinner !== 0 && !(gamePhase === 'finaldiscard' && meldBuildingComplete) && !(gamePhase === 'finallaydown' && meldBuildingComplete) && !showingAIMelds && !allFinalPlaysComplete && (
                             <div className="melds-area">
                                 <h3>Your Melds:</h3>
                                 {humanPlayer.melds.map((meld, idx) => (
@@ -7383,8 +7251,6 @@ const processAITurn = () => {
                                     className="success"
                                     onClick={() => {
                                         const winnerIdx = roundWinner;
-                                        setShowingHumanFinalPlay(false);
-                                        setHumanFinalPlayResults(null);
                                         setShowingAIMelds(false);
                                         setAiResultsToShow(null);
                                         setAllFinalPlaysComplete(false);
@@ -7452,7 +7318,7 @@ const processAITurn = () => {
                             </div>
                         )}
                         <div className="actions">
-                            {isHumanTurn && gamePhase === 'finaldiscard' && meldBuildingComplete && !showingHumanFinalPlay && (
+                            {isHumanTurn && gamePhase === 'finaldiscard' && meldBuildingComplete && (
                                 <button
                                     className="success"
                                     onClick={() => {
@@ -7472,227 +7338,7 @@ const processAITurn = () => {
                             )}
                         </div>
                         {}
-                        {humanFinalPlayResults && roundWinner !== null && !allFinalPlaysComplete && (
-                            <div className="your-final-play-panel">
-                                <h3>👤 Your Final Play</h3>
-                                <div className="final-play-content" style={{overflowX: 'auto', WebkitOverflowScrolling: 'touch'}}>
-                                    <div style={{display: 'flex', gap: '8px', alignItems: 'flex-start', whiteSpace: 'nowrap'}}>
-                                        {}
-                                        {humanFinalPlayResults.melds.length > 0 && (
-                                            <>
-                                            <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                                <h5 style={{margin: 0, fontSize: '11px', color: '#28a745', whiteSpace: 'nowrap'}}>Melds:</h5>
-                                                <div style={{display: 'flex', gap: '6px'}}>
-                                                    {humanFinalPlayResults.melds.map((meld, meldIdx) => (
-                                                        <div key={meldIdx} style={{
-                                                            display: 'flex',
-                                                            gap: '3px',
-                                                            padding: '4px',
-                                                            border: '2px solid #28a745',
-                                                            borderRadius: '4px',
-                                                            background: 'rgba(40, 167, 69, 0.05)'
-                                                        }}>
-                                                            {meld.map((card, cardIdx) => (
-                                                                <div key={`${meldIdx}-${cardIdx}`} style={{display: 'inline-block', flexShrink: 0}}>
-                                                                    <WinnerHandCard
-                                                                        card={{ ...card, isWildForRound: isWild(card, round) }}
-                                                                        showOriginalTag={false}
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            {(humanFinalPlayResults.playedOnCards?.length > 0 || humanFinalPlayResults.remaining.length > 0) && (
-                                                <div style={{borderLeft: '2px solid #dee2e6', height: '60px', alignSelf: 'center'}}></div>
-                                            )}
-                                            </>
-                                        )}
-                                        {}
-                                        {humanFinalPlayResults.playedOnCards && humanFinalPlayResults.playedOnCards.length > 0 && (
-                                            <>
-                                            <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                                <h5 style={{margin: 0, fontSize: '11px', color: '#17a2b8', whiteSpace: 'nowrap'}}>Played on Winner:</h5>
-                                                <div style={{
-                                                    display: 'flex',
-                                                    gap: '3px',
-                                                    padding: '4px',
-                                                    border: '2px solid #17a2b8',
-                                                    borderRadius: '4px',
-                                                    background: 'rgba(23, 162, 184, 0.05)'
-                                                }}>
-                                                    {humanFinalPlayResults.playedOnCards.map((card, idx) => (
-                                                        <div key={idx} style={{display: 'inline-block', flexShrink: 0}}>
-                                                            <WinnerHandCard card={{ ...card, isWildForRound: isWild(card, round), addedBy: card.addedBy }} showOriginalTag={false} />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            {(humanFinalPlayResults.remaining.length > 0 || humanFinalPlayResults.discard) && (
-                                                <div style={{borderLeft: '2px solid #dee2e6', height: '60px', alignSelf: 'center'}}></div>
-                                            )}
-                                            </>
-                                        )}
-                                        {}
-                                        {humanFinalPlayResults.remaining.length > 0 && (
-                                            <>
-                                            <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                                <h5 style={{margin: 0, fontSize: '11px', color: '#dc3545', whiteSpace: 'nowrap'}}>
-                                                    Remaining ({humanFinalPlayResults.points} pts):
-                                                </h5>
-                                                <div style={{
-                                                    display: 'flex',
-                                                    gap: '4px',
-                                                    padding: '4px',
-                                                    border: '2px solid #dc3545',
-                                                    borderRadius: '4px',
-                                                    background: 'rgba(220, 53, 69, 0.05)'
-                                                }}>
-                                                    {humanFinalPlayResults.remaining.map((card, idx) => (
-                                                        <div key={idx} style={{display: 'inline-block', flexShrink: 0}}>
-                                                            <WinnerHandCard card={{ ...card, isWildForRound: isWild(card, round) }} showOriginalTag={false} />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            {humanFinalPlayResults.discard && (
-                                                <div style={{borderLeft: '2px solid #dee2e6', height: '60px', alignSelf: 'center'}}></div>
-                                            )}
-                                            </>
-                                        )}
-                                        {}
-                                        {humanFinalPlayResults.discard && (
-                                            <div style={{display: 'inline-flex', flexDirection: 'column', gap: '2px'}}>
-                                                <h5 style={{margin: 0, fontSize: '11px', color: '#6c757d', whiteSpace: 'nowrap'}}>Discarded:</h5>
-                                                <div style={{
-                                                    display: 'flex',
-                                                    gap: '3px',
-                                                    padding: '4px',
-                                                    border: '2px solid #6c757d',
-                                                    borderRadius: '4px',
-                                                    background: 'rgba(108, 117, 125, 0.05)'
-                                                }}>
-                                                    <div style={{display: 'inline-block', flexShrink: 0}}>
-                                                        <WinnerHandCard card={{ ...humanFinalPlayResults.discard, isWildForRound: isWild(humanFinalPlayResults.discard, round) }} showOriginalTag={false} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                    {}
-                                    <div style={{paddingTop: '12px', display: 'flex', gap: '10px', justifyContent: 'flex-end', flexShrink: 0}}>
-                                    {humanFinalPlayResults && (() => {
-                                        const humanPlayerIndex = players.findIndex(p => p.id === humanFinalPlayResults.player.id);
-                                        if (humanPlayerIndex === -1) return null;
-                                        const nextIndex = (humanPlayerIndex + 1) % players.length;
-                                        const isLastPlayer = nextIndex === roundWinner;
-                                        if (!isLastPlayer) return null;
-                                        return (
-                                            <>
-                                                {isLastPlayer && (
-                                                    <button
-                                                        className="success"
-                                                        onClick={() => {
-                                                            openScoreboard();
-                                                        }}
-                                                        style={{fontSize: '14px', padding: '8px 16px'}}
-                                                    >
-                                                        Show Scoreboard
-                                                    </button>
-                                                )}
-                                                <button
-                                                    className="success"
-                                                onClick={() => {
-                                                    if (isLastPlayer) {
-                                                        const winnerIdx = roundWinner;
-                                                        setShowingHumanFinalPlay(false);
-                                                        setHumanFinalPlayResults(null);
-                                                        setShowingAIMelds(false);
-                                                        setAiResultsToShow(null);
-                                                        setAllFinalPlaysComplete(false);
-                                                        setPlayersWhoHaveTakenFinalTurn(new Set());
-                                                        setRoundWinner(null);
-                                                        nextFinalTurnActionRef.current = null;
-                                                        if (round < 11) {
-                                                            const updatedPlayers = players.map((player, idx) => {
-                                                                const roundScore = idx === winnerIdx ? 0 : calculateScore(player.hand);
-                                                                const newScore = player.score + roundScore;
-                                                                const cleanMelds = player.melds.map(meld =>
-                                                                    meld.map(card => ({
-                                                                        rank: card.rank,
-                                                                        suit: card.suit,
-                                                                        isRed: card.isRed,
-                                                                        id: card.id,
-                                                                        representsCard: card.representsCard
-                                                                    }))
-                                                                );
-                                                                const cleanRemainingCards = player.hand.map(card => ({
-                                                                    rank: card.rank,
-                                                                    suit: card.suit,
-                                                                    isRed: card.isRed,
-                                                                    id: card.id
-                                                                }));
-                                                                const cleanPlayedOnCards = (player.playedOnCards || []).map(card => ({
-                                                                    rank: card.rank,
-                                                                    suit: card.suit,
-                                                                    isRed: card.isRed,
-                                                                    id: card.id,
-                                                                    playedOn: card.playedOn
-                                                                }));
-                                                                const roundData = {
-                                                                    round: round,
-                                                                    melds: cleanMelds,
-                                                                    remainingCards: cleanRemainingCards,
-                                                                    playedOnCards: cleanPlayedOnCards,
-                                                                    roundScore: roundScore,
-                                                                    runningScore: newScore,
-                                                                    wasWinner: idx === winnerIdx
-                                                                };
-                                                                return {
-                                                                    ...player,
-                                                                    score: newScore,
-                                                                    hand: [],
-                                                                    melds: [],
-                                                                    playedOnCards: [],
-                                                                    roundHistory: [...(player.roundHistory || []), roundData]
-                                                                };
-                                                            });
-                                                            const nextDealerIdx = (dealerIndex + 1) % updatedPlayers.length;
-                                                            const deckCount = updatedPlayers.length <= 2 ? 1 : updatedPlayers.length <= 5 ? 2 : 3;
-                                                            setPlayers(updatedPlayers);
-                                                            setDealerIndex(nextDealerIdx);
-                                                            setMessage(`Round ${round} complete! Starting round ${round + 1}...`);
-                                                            startRound(round + 1, updatedPlayers, deckCount, nextDealerIdx);
-                                                            setRound(round + 1);
-                                                        }
-                                                    } else {
-                                                        setShowingHumanFinalPlay(false);
-                                                        const nextIndex = (currentPlayerIndex + 1) % players.length;
-                                                        setCurrentPlayerIndex(nextIndex);
-                                                        setGamePhase('finaldraw');
-                                                        setIsDiscarding(false);
-                                                        const isNextHuman = !players[nextIndex].isAI;
-                                                        if (isNextHuman) {
-                                                            setMessage('Your final turn - draw a card');
-                                                        } else {
-                                                            setMessage(`${players[nextIndex].name}'s final turn...`);
-                                                        }
-                                                    }
-                                                }}
-                                                style={{fontSize: '14px', padding: '8px 16px'}}
-                                            >
-                                                {isLastPlayer ? 'Next Round' : 'Continue'}
-                                            </button>
-                                            </>
-                                        );
-                                    })()}
-                                    </div>
-                                </div>
-                            )}
-                        {}
-                        {showScoreboardModal && allFinalPlaysComplete && !showingHumanFinalPlay && (
+                        {showScoreboardModal && allFinalPlaysComplete && (
                             <div className="score-details-modal">
                                 <div className="score-details-header">
                                     <h2>Round {round} Complete - Scoreboard</h2>
